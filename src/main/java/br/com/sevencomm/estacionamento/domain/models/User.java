@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Entity
@@ -18,17 +16,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "login must not be empty")
     private String login;
 
-    @NotEmpty(message = "senha must not be empty")
     private String senha;
 
-    @NotEmpty(message = "nome must not be empty")
     private String nome;
 
-    @Email
-    @NotEmpty(message = "email must not be empty")
     private String email;
 
     public static User signUpToUser(SignUpDTO signupDTO) {

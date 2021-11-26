@@ -28,13 +28,22 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = _userRepository.findById(id);
 
         return userOptional.orElseThrow(() -> new IllegalArgumentException("User not Found!"));
-
     }
 
     @Override
     public void signUp(SignUpDTO userDTO) {
 
-        _userRepository.save(User.signUpToUser(userDTO));
+        if (userDTO.getLogin().equals("") || userDTO.getLogin() == null)
+            throw new IllegalArgumentException("Login must not be null");
+        if (userDTO.getSenha().equals("") || userDTO.getSenha() == null)
+            throw new IllegalArgumentException("Senha must not be null");
+        if (userDTO.getNome().equals("") || userDTO.getNome() == null)
+            throw new IllegalArgumentException("Nome must not be null");
+        if (userDTO.getEmail().equals("") || userDTO.getEmail() == null)
+            throw new IllegalArgumentException("Email must not be null");
+        if (!userDTO.getSenha().equals(userDTO.getConfirmarSenha()))
+            throw new IllegalArgumentException("Senha Fields dont Match! ");
 
+        _userRepository.save(User.signUpToUser(userDTO));
     }
 }
