@@ -1,5 +1,6 @@
 package br.com.sevencomm.estacionamento.domain.services;
 
+import br.com.sevencomm.estacionamento.api.DTOs.SignUpDTO;
 import br.com.sevencomm.estacionamento.domain.models.User;
 
 import java.util.List;
@@ -10,6 +11,6 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    void Signup(User user);
+    void signUp(SignUpDTO userDTO);
 
 }

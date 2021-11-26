@@ -1,5 +1,6 @@
 package br.com.sevencomm.estacionamento.domain.servicesImpl;
 
+import br.com.sevencomm.estacionamento.api.DTOs.SignUpDTO;
 import br.com.sevencomm.estacionamento.data.repositories.UserRepository;
 import br.com.sevencomm.estacionamento.domain.models.User;
 import br.com.sevencomm.estacionamento.domain.services.UserService;
@@ -25,14 +26,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         Optional<User> userOptional = _userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            throw new IllegalArgumentException("User not found");
-        }
 
-        return userOptional.get();
+        return userOptional.orElseThrow(() -> new IllegalArgumentException("User not Found!"));
+
     }
 
     @Override
-    public void Signup(User user) {
+    public void signUp(SignUpDTO userDTO) {
+
+        _userRepository.save(User.signUpToUser(userDTO));
+
     }
 }

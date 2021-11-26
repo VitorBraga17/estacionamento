@@ -1,10 +1,16 @@
 package br.com.sevencomm.estacionamento.domain.models;
 
+import br.com.sevencomm.estacionamento.api.DTOs.SignUpDTO;
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
+@Data
 @Entity
 public class User {
 
@@ -12,50 +18,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "login must not be empty")
     private String login;
+
+    @NotEmpty(message = "senha must not be empty")
     private String senha;
+
+    @NotEmpty(message = "nome must not be empty")
     private String nome;
+
+    @Email
+    @NotEmpty(message = "email must not be empty")
     private String email;
 
-    public User(){}
+    public static User signUpToUser(SignUpDTO signupDTO) {
+        User user = new User();
 
-    public void setId(Long id){
-        this.id = id;
-    }
+        user.setLogin(signupDTO.getLogin());
+        user.setSenha(signupDTO.getSenha());
+        user.setEmail(signupDTO.getEmail());
+        user.setNome(signupDTO.getNome());
 
-    public Long getId(){
-        return this.id;
-    }
-
-    public void setLogin(String login){
-        this.login = login;
-    }
-
-    public String getLogin(){
-        return this.login;
-    }
-
-    public void setSenha(String senha){
-        this.senha = senha;
-    }
-
-    public String getSenha(){
-        return this.senha;
-    }
-
-    public void setNome(String nome){
-        this.nome = nome;
-    }
-
-    public  String getNome(){
-        return this.nome;
-    }
-
-    public void setEmail(String email){
-        this.email = email;
-    }
-
-    public String getEmail(){
-        return this.email;
+        return user;
     }
 }
